@@ -10,8 +10,6 @@ const convertTime = (timeString) => {
     }
 };
 
-
-
 const babysitter = (startTime, bedTime, endTime) => {
     let convertedStart = convertTime(startTime);
     let convertedBed = convertTime(bedTime);
@@ -21,13 +19,17 @@ const babysitter = (startTime, bedTime, endTime) => {
     let secondPay = 8 * ((2400 - convertedBed)/ 100);
     let thirdPay = 16 * (convertedEnd / 100);
 
-    if(convertedBed === convertedEnd) {
-        secondPay = 0;
+    if(convertedStart >= convertedBed) {
+        firstPay = 0;
+        secondPay = 8 * ((2400 - convertedStart) / 100);
+    }
+
+    if(convertedEnd === 2400) {
         thirdPay = 0;
     }
 
-    if(convertedStart >= convertedBed) {
-        firstPay = 0;
+    if(convertedBed === convertedEnd) {
+        secondPay = 0;
         thirdPay = 0;
     }
 
