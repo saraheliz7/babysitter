@@ -1,4 +1,4 @@
-const convertTime = (timeString) => {
+const convertTo24Hour = (timeString) => {
     let time = timeString.slice(0, -2);
 
     if((timeString.includes("am") && timeString.includes("12")) || timeString.includes("pm")) {
@@ -8,46 +8,46 @@ const convertTime = (timeString) => {
     }
 };
 
-const babysitter = (startTime, bedTime, endTime) => {
-    let convertedStart = convertTime(startTime);
-    let convertedBed = convertTime(bedTime);
-    let convertedEnd = convertTime(endTime);
+const calculateBabysitterPay = (startTime, bedTime, endTime) => {
+    let convertedStart = convertTo24Hour(startTime);
+    let convertedBed = convertTo24Hour(bedTime);
+    let convertedEnd = convertTo24Hour(endTime);
 
-    let firstPay = 12 * (convertedBed - convertedStart);
-    let secondPay = 8 * (24 - convertedBed);
-    let thirdPay = 16 * (convertedEnd);
+    let beforeBedPay = 12 * (convertedBed - convertedStart);
+    let betweenBedAndMidnightPay = 8 * (24 - convertedBed);
+    let afterMidnightPay = 16 * (convertedEnd);
 
 
     if(convertedStart >= convertedBed) {
-        firstPay = 0;
-        secondPay = 8 * (24 - convertedStart);
+        beforeBedPay = 0;
+        betweenBedAndMidnightPay = 8 * (24 - convertedStart);
     }
 
     if(convertedEnd === 24) {
-        thirdPay = 0;
+        afterMidnightPay = 0;
     }
 
     if(convertedBed === convertedEnd) {
-        secondPay = 0;
-        thirdPay = 0;
+        betweenBedAndMidnightPay = 0;
+        afterMidnightPay = 0;
     }
 
     if(convertedStart === 24) {
-        firstPay = 0;
-        secondPay = 0;
-        thirdPay = 16 * (convertedEnd);
+        beforeBedPay = 0;
+        betweenBedAndMidnightPay = 0;
+        afterMidnightPay = 16 * (convertedEnd);
     }
 
     if((convertedBed > convertedEnd && convertedEnd > 12)
         || (convertedBed < convertedEnd && convertedBed <= 12)) {
-        firstPay = 12 * (convertedEnd - convertedStart);
-        secondPay = 0;
-        thirdPay = 0;
+        beforeBedPay = 12 * (convertedEnd - convertedStart);
+        betweenBedAndMidnightPay = 0;
+        afterMidnightPay = 0;
     } else if(convertedBed > convertedEnd && convertedEnd < 12 && convertedBed < 12) {
-        firstPay = 12 * (24 - convertedStart);
-        secondPay = 0;
+        beforeBedPay = 12 * (24 - convertedStart);
+        betweenBedAndMidnightPay = 0;
     }
 
-    return firstPay + secondPay + thirdPay;
+    return beforeBedPay + betweenBedAndMidnightPay + afterMidnightPay;
 };
-module.exports = babysitter;
+module.exports = calculateBabysitterPay;
