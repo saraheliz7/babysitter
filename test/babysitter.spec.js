@@ -24,4 +24,13 @@ describe("The babysitter", function() {
         "and $16/hour after midnight with bed time being before start time", function(){
         expect(babysitter("9pm", "6pm", "4am")).to.equal(88);
     });
+
+    it("gets paid $12/hour before bedtime and end time when the bed time is later than end time", function(){
+        expect(babysitter("5pm", "9pm", "8pm")).to.equal(36);
+    });
+
+    it("gets paid $12/hour before bedtime and end time when the bed time is later than end time", function(){
+        expect(babysitter("9pm", "3am", "11pm")).to.equal(24);
+    });
+
 });
