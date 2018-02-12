@@ -43,8 +43,10 @@ const babysitter = (startTime, bedTime, endTime) => {
         firstPay = 12 * (convertedEnd - convertedStart);
         secondPay = 0;
         thirdPay = 0;
+    } else if(convertedBed > convertedEnd && convertedEnd < 12 && convertedBed < 12) {
+        firstPay = 12 * (24 - convertedStart);
+        secondPay = 0;
     }
-
 
     return firstPay + secondPay + thirdPay;
 };
